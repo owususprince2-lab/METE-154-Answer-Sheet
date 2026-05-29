@@ -525,13 +525,6 @@
       animation: fadeUp 0.5s ease both;
     }
 
-    .result-emoji {
-      font-size: 72px;
-      margin-bottom: 16px;
-      display: block;
-      line-height: 1;
-    }
-
     .thanks-title {
       font-family: 'Playfair Display', serif;
       font-size: 28px;
@@ -541,13 +534,104 @@
     }
 
     .thanks-sub { font-size: 15px; color: var(--text-mid); line-height: 1.7; }
-    .result-comment {
-      margin-top: 20px;
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--brown-mid);
-      font-family: 'Playfair Display', serif;
+
+    /* ── EXPECTATIONS PAGE ── */
+    #expect-page {
+      display: none;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
     }
+
+    .expect-card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 24px;
+      padding: 52px 44px;
+      box-shadow: var(--card-shadow);
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .expect-header { text-align: center; margin-bottom: 28px; }
+
+    .expect-icon {
+      font-size: 48px;
+      display: block;
+      margin-bottom: 14px;
+      line-height: 1;
+    }
+
+    .expect-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--brown-deep);
+      margin-bottom: 8px;
+    }
+
+    .expect-sub { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    .expect-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--brown-mid);
+      margin-bottom: 10px;
+    }
+
+    #expect-textarea {
+      width: 100%;
+      min-height: 160px;
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      line-height: 1.6;
+    }
+
+    #expect-textarea:focus {
+      border-color: var(--brown-mid);
+      box-shadow: 0 0 0 3px rgba(123,74,45,0.12);
+    }
+
+    #expect-textarea::placeholder { color: var(--muted); }
+
+    .char-hint {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .btn-expect {
+      width: 100%;
+      margin-top: 22px;
+      padding: 16px;
+      background: linear-gradient(135deg, #7b4a2d, #5c3520);
+      border: none;
+      border-radius: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+      box-shadow: 0 5px 22px rgba(61,31,13,0.22);
+    }
+
+    .btn-expect:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(61,31,13,0.30); }
+    .btn-expect:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
     .footer { text-align: center; margin-top: 32px; font-size: 12px; color: var(--muted); letter-spacing: 1px; }
 
@@ -661,14 +745,28 @@
   <div class="footer" style="margin-top:32px;">©Team Benny</div>
 </div>
 
+<!-- ══════════ EXPECTATIONS PAGE ══════════ -->
+<div id="expect-page" class="page" style="display:flex;align-items:center;justify-content:center;">
+  <div class="expect-card">
+    <div class="expect-header">
+      <span class="expect-icon">💬</span>
+      <div class="expect-title">One Last Thing</div>
+      <p class="expect-sub">Your answers have been recorded, <strong id="expect-name">—</strong>.<br/><br/>What do you hope to gain or learn from <strong>METE 154 Environmental Science</strong> this semester?</p>
+    </div>
+    <label class="expect-label" for="expect-textarea">Your Expectations</label>
+    <textarea id="expect-textarea" placeholder="Share your thoughts freely — what topics interest you? What skills or knowledge are you hoping to walk away with?"></textarea>
+    <div class="char-hint" id="char-hint">0 characters</div>
+    <button class="btn-expect" id="btn-expect" onclick="submitExpectation()">Submit &amp; Finish →</button>
+  </div>
+  <div class="footer" style="position:absolute;bottom:24px;left:0;right:0;">©Team Benny</div>
+</div>
+
 <!-- ══════════ THANK YOU ══════════ -->
-<div id="thanks-page" class="page" style="display:flex;align-items:center;justify-content:center;">
-  <div id="thanks-inner" style="display:none;text-align:center;">
+<div id="thanks-page" class="page" style="display:none;align-items:center;justify-content:center;">
+  <div style="text-align:center;">
     <div class="thanks-card">
-      <span class="result-emoji" id="result-emoji">✅</span>
-      <div class="thanks-title">Submitted!</div>
-      <p class="thanks-sub">Your answers have been recorded, <strong id="thanks-name">—</strong>.<br/>Results will be shared by your instructor.</p>
-      <div class="result-comment" id="result-comment"></div>
+      <div class="thanks-title">All Done!</div>
+      <p class="thanks-sub">Thank you, <strong id="thanks-name">—</strong>.<br/>Your answers and expectations have been recorded.<br/>Results will be shared by your instructor.</p>
     </div>
     <div class="footer">©Team Benny</div>
   </div>
@@ -925,13 +1023,13 @@
     for (let q = 1; q <= TOTAL_Q; q++) {
       if (answers[q] && answers[q] === ANSWER_KEY[q]) rawScore++;
     }
-    const finalScore   = Math.max(0, rawScore - tabDeduction);
-    const percentage   = ((finalScore / TOTAL_Q) * 100).toFixed(1);
+    const finalScore    = Math.max(0, rawScore - tabDeduction);
+    const percentage    = ((finalScore / TOTAL_Q) * 100).toFixed(1);
     const totalAnswered = Object.keys(answers).length;
-    const answerStr    = Array.from({length: TOTAL_Q}, (_, i) => `Q${i+1}=${answers[i+1] || '-'}`).join(',');
-    const { emoji, comment } = getResultComment(Math.round(finalScore));
+    const answerStr     = Array.from({length: TOTAL_Q}, (_, i) => `Q${i+1}=${answers[i+1] || '-'}`).join(',');
 
-    const payload = {
+    // Store payload globally so we can append expectation before final send
+    window._quizPayload = {
       sheet: 'Sheet1',
       studentName,
       indexNumber,
@@ -948,8 +1046,39 @@
       finalScore: finalScore.toFixed(1),
       totalQuestions: TOTAL_Q,
       percentage,
-      resultComment: comment,
     };
+
+    document.getElementById('sheet-page').style.display = 'none';
+    document.getElementById('expect-name').textContent  = studentName;
+    document.getElementById('expect-page').style.display = 'flex';
+  }
+
+  // Character counter for textarea
+  document.addEventListener('DOMContentLoaded', () => {
+    const ta = document.getElementById('expect-textarea');
+    if (ta) {
+      ta.addEventListener('input', () => {
+        document.getElementById('char-hint').textContent = `${ta.value.length} characters`;
+      });
+    }
+  });
+
+  async function submitExpectation() {
+    const ta  = document.getElementById('expect-textarea');
+    const btn = document.getElementById('btn-expect');
+    const txt = ta.value.trim();
+
+    if (!txt) {
+      ta.focus();
+      ta.style.borderColor = 'var(--danger)';
+      ta.placeholder = 'Please share at least a few words before submitting.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Saving…';
+
+    const payload = Object.assign({}, window._quizPayload, { courseExpectation: txt });
 
     try {
       await fetch(GOOGLE_SCRIPT_URL, {
@@ -960,13 +1089,10 @@
       });
     } catch(e) { console.error('Submit error:', e); }
 
-    document.getElementById('sheet-page').style.display = 'none';
+    document.getElementById('expect-page').style.display = 'none';
+    document.getElementById('thanks-name').textContent   = studentName;
     const tp = document.getElementById('thanks-page');
     tp.style.display = 'flex';
-
-    document.getElementById('result-emoji').textContent  = emoji;
-    document.getElementById('result-comment').textContent = comment;
-    document.getElementById('thanks-inner').style.display = 'block';
   }
 
   document.getElementById('reg-index').addEventListener('paste', e => e.preventDefault());
